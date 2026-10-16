@@ -7,3 +7,5 @@ Format: number, date, decision, reasoning.
 3. 2026-10-16 - Client is the owner (as in project 1). Revisit adding an outside client after Phase 3 if one is available.
 4. 2026-10-16 - DuckDB as the store (no server process, light on the 2017 Air's RAM). Postgres only if a later need appears.
 5. 2026-10-16 - Cloud-only AI; Claude Haiku for the agent loop by default, with a step cap and per-question cost logging.
+6. 2026-10-16 - Repo stays private until the eval set exists (Phase 2).
+7. 2026-10-16 - Question focus is monthly cost: rent versus mortgage payment on a new property. Mortgage payment will be a calculator tool (Canadian semi-annual compounding), not a table lookup, so answers stay exactly checkable. Source survey in the project files (phase1-source-survey.md); assumptions for down payment and amortization still to be set.
