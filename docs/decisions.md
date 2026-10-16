@@ -9,3 +9,5 @@ Format: number, date, decision, reasoning.
 5. 2026-10-16 - Cloud-only AI; Claude Haiku for the agent loop by default, with a step cap and per-question cost logging.
 6. 2026-10-16 - Repo stays private until the eval set exists (Phase 2).
 7. 2026-10-16 - Question focus is monthly cost: rent versus mortgage payment on a new property. Mortgage payment will be a calculator tool (Canadian semi-annual compounding), not a table lookup, so answers stay exactly checkable. Source survey in the project files (phase1-source-survey.md); assumptions for down payment and amortization still to be set.
+8. 2026-10-16 - Scope is every city within a 40 minute reach of Vancouver and all dwelling types (house, condo, apartment, townhouse). "40 minutes" will be a hand-built municipality reference table (origin, mode, time of day set by the owner), not something the agent decides. Where a source only reports the Vancouver CMA or lacks a dwelling type, the agent must say so rather than infer.
+9. 2026-10-16 - Calculator defaults: 20% down, 25-year amortization, as parameters. Not financial advice; insured-mortgage rules to be checked.
