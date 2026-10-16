@@ -3,6 +3,9 @@
 from math import asin, cos, radians, sin, sqrt
 
 EARTH_RADIUS_KM = 6371.0088
+# Decision 8: scope is every municipality within 40 km straight-line of downtown Vancouver.
+WATERFRONT_STATION = (49.2858, -123.1117)
+SCOPE_RADIUS_KM = 40.0
 
 
 def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
