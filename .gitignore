@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data (raw downloads and the DuckDB store are reproducible, not committed)
+data/raw/*
+!data/raw/.gitkeep
+*.duckdb
+*.duckdb.wal
+.env
