@@ -18,3 +18,8 @@ One entry per phase, written so an AI can turn it into a CV accomplishment state
 - Wrote 41 questions (12 lookups, 12 calculations, 5 scope checks, 12 refusal cases), built around the owner's real use (renting vs buying a 1-bedroom condo in Surrey, Burnaby or Vancouver) and including the owner's own five questions on rent vs buy, cheapest city to rent or buy, and rent per city. All 29 answerable expected values were derived by SQL and mortgage maths, not typed in.
 - Baseline: an agent that always refuses scores 29% (12 of 41) with 0 confident-wrong answers; this is the floor a real agent must beat.
 - Metrics: 35 unit tests passing. Question set is at the 40 to 60 target's lower edge; more of the owner's own wording is welcome.
+
+## Phase 3 - Agent core (in progress)
+- Built a Claude tool-use agent that answers housing questions by reading the table descriptions, writing SQL, running it, and calling a tested mortgage calculator, then returns a structured answer with its query or refuses with a reason. Default model is Claude Haiku 5.5 with a 10-step cap, a per-run spend cap, and tokens and dollars logged for every question.
+- Guardrails: read-only database connection, file and network access disabled and locked, single-SELECT validation, 50-row and 10-second limits; an answer whose cited query was never run is rejected; running out of steps or model refusals become abstentions. Tested with a scripted fake model (14 tests: write attempts, file access, row limit, timeout, query-citation check, step cap, budget cap, eval-runner integration), so the logic is verified without spending anything.
+- Metrics: 49 unit tests passing. Live eval score, confident-wrong count and cost per question to be added after the first run against the 41-question set.
