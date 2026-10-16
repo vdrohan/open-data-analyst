@@ -2,7 +2,7 @@
 
 Ask a question about Canadian housing in plain English. A Claude agent writes read-only SQL against a local DuckDB store, runs it, and returns the number, a chart and the exact query, or says it can't answer.
 
-**Status: Phase 2 (eval set).** The data layer works and a first 33-question eval set with a scorer exists; the agent is not built yet. See [docs/plan.md](docs/plan.md) and [docs/data-dictionary.md](docs/data-dictionary.md).
+**Status: Phase 2 (eval set).** The data layer works and a first 41-question eval set with a scorer exists; the agent is not built yet. See [docs/plan.md](docs/plan.md) and [docs/data-dictionary.md](docs/data-dictionary.md).
 
 ## Why this exists
 Second portfolio project. Where [support-desk-assistant](https://github.com/vdrohan/support-desk-assistant) answers from documents, this one answers from structured data using tools, and is judged on exact numbers against an eval set.

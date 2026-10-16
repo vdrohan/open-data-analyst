@@ -76,6 +76,8 @@ def derive_expected(con: duckdb.DuckDBPyConnection, question: Question) -> float
         )
         if question.minus_sql:
             payment -= float(con.execute(question.minus_sql).fetchone()[0])
+        if question.answer_type == "bool":
+            return payment > 0  # "is the payment higher than the thing subtracted"
         return round(payment, 2)
     if question.answer_type == "number":
         return float(value)

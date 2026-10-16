@@ -15,6 +15,6 @@ One entry per phase, written so an AI can turn it into a CV accomplishment state
 
 ## Phase 2 - Eval set (in progress)
 - Built the eval harness before any agent code: a question format with exact, tolerance-checked expected answers, a scorer that separates correct answers, correct refusals, missed answers, wrong answers and overreach (answering what the data cannot support), and a verifier that re-derives every expected number from the data after a refresh.
-- Wrote 33 seed questions (12 lookups, 7 calculations, 5 scope checks, 9 refusal cases) around the owner's real use: renting vs buying a 1-bedroom condo in Surrey, Burnaby or Vancouver. All 24 answerable expected values were derived by SQL and mortgage maths, not typed in.
-- Baseline: an agent that always refuses scores 27% (9 of 33) with 0 confident-wrong answers; this is the floor a real agent must beat.
-- Metrics: 35 unit tests passing. Question set is below the 40 to 60 target and needs the owner's own questions added.
+- Wrote 41 questions (12 lookups, 12 calculations, 5 scope checks, 12 refusal cases), built around the owner's real use (renting vs buying a 1-bedroom condo in Surrey, Burnaby or Vancouver) and including the owner's own five questions on rent vs buy, cheapest city to rent or buy, and rent per city. All 29 answerable expected values were derived by SQL and mortgage maths, not typed in.
+- Baseline: an agent that always refuses scores 29% (12 of 41) with 0 confident-wrong answers; this is the floor a real agent must beat.
+- Metrics: 35 unit tests passing. Question set is at the 40 to 60 target's lower edge; more of the owner's own wording is welcome.

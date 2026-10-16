@@ -104,3 +104,13 @@ def test_seed_questions_are_valid_and_the_floor_is_only_refusals():
     assert report.counts[MISSED] == len(questions) - len(refusals)
     for line in Path("data/eval/questions.jsonl").read_text().splitlines():
         json.loads(line)  # one JSON object per line
+
+
+def test_bool_question_with_mortgage_asks_whether_payment_beats_the_subtracted_value():
+    con = duckdb.connect()
+    base = dict(
+        answer_type="bool", expected=True, reference_sql="SELECT 600000",
+        mortgage=MortgageStep(rate_pct=6.19),
+    )  # fmt: skip
+    assert derive_expected(con, number(minus_sql="SELECT 2000", **base)) is True
+    assert derive_expected(con, number(minus_sql="SELECT 4000", **base)) is False

@@ -36,7 +36,9 @@ class Question:
     rel_tol: float = 0.0  # numbers: accepted relative error; the looser of the two applies
     reference_sql: str = ""  # returns one row, one column
     mortgage: MortgageStep | None = None
-    minus_sql: str = ""  # optional: subtract this query's value from the result (e.g. a rent)
+    # optional: subtract this query's value from the payment (e.g. a rent). For a bool
+    # question the expected answer is whether the result is above zero.
+    minus_sql: str = ""
     volatile: bool = False  # expected value changes when new data arrives; drift is a warning
     why_abstain: str = ""  # abstain questions: what the data cannot support
     notes: str = field(default="", compare=False)
