@@ -4,6 +4,7 @@ The model client is injected (anything with `messages.create`, like `anthropic.A
 so the loop is tested with a fake and no spend. Every question logs its tokens and cost.
 """
 
+import math
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -41,8 +42,13 @@ the latest posted 5-year rate in the data. State these assumptions in the explan
 4. Finish with exactly one call to submit_answer or abstain. submit_answer's `query` must be a \
 query you ran with run_sql that returned the figures behind the answer; for a mortgage answer \
 that is the query for the price. Give the value in the unit the question asks for \
-(CAD per month, percent, a count) with no thousands separators, rounded to at most 2 decimals.
+(CAD per month, percent, a count) as a JSON number with no thousands separators, rounded to at \
+most 2 decimals. When the answer is a place, give just its name (for example "Langley"), not a \
+description or code. To decline, call abstain; never submit "abstain" as a value.
 """
+
+# Text a model might put in `value` to decline; declining must go through the abstain tool.
+DECLINE_WORDS = frozenset({"abstain", "abstained", "cannot answer", "n/a", "unknown"})
 
 
 @dataclass
@@ -143,7 +149,9 @@ class Agent:
                     if error is None:
                         log.final = "submit_answer"
                         log.explanation = str(call.input.get("explanation", ""))
-                        return AgentAnswer(value=call.input["value"], query=call.input["query"])
+                        return AgentAnswer(
+                            value=_clean_value(call.input["value"]), query=call.input["query"]
+                        )
                     results.append(_result(call.id, error, True))
                     continue
                 output, is_error = run_tool(store, call.name, call.input, ran)
@@ -158,12 +166,28 @@ class Agent:
     def _check_submission(args: dict, ran: set[str]) -> str | None:
         if "value" not in args or "query" not in args:
             return "submit_answer needs `value` and `query`."
+        value = args["value"]
+        if isinstance(value, str) and value.strip().casefold() in DECLINE_WORDS:
+            return "To decline, call the abstain tool; `value` must be the answer itself."
         if normalise_sql(str(args["query"])) not in ran:
             return (
                 "`query` must be exactly a query you already ran successfully with run_sql. "
                 "Run it first, or submit the query you ran."
             )
         return None
+
+
+def _clean_value(value):
+    """The tool schema allows text, so models sometimes send a number as text ('6.19').
+    A string that is purely a finite number becomes a float; anything else is left alone."""
+    if isinstance(value, str):
+        try:
+            number = float(value.strip().replace(",", ""))
+        except ValueError:
+            return value
+        if math.isfinite(number):
+            return number
+    return value
 
 
 def _result(tool_use_id: str, content: str, is_error: bool) -> dict:

@@ -120,6 +120,31 @@ def test_submit_with_unrun_query_is_bounced_then_accepted(db):
     assert bounce["is_error"] and "already ran" in bounce["content"]
 
 
+def test_numeric_text_becomes_a_number_but_names_stay_text(db):
+    sql = "SELECT dollars FROM rent WHERE city = 'B'"
+    for given, expected in [("2500", 2500.0), (" 2,500.50 ", 2500.5), ("Langley", "Langley")]:
+        client = FakeClient(
+            [tool_use("run_sql", {"sql": sql})],
+            [tool_use("submit_answer", {"value": given, "query": sql, "explanation": "x"})],
+        )
+        answer = Agent(client, db).ask("q")
+        assert answer.value == expected and type(answer.value) is type(expected)
+
+
+def test_declining_through_submit_answer_is_bounced(db):
+    sql = "SELECT dollars FROM rent"
+    client = FakeClient(
+        [tool_use("run_sql", {"sql": sql})],
+        [tool_use("submit_answer", {"value": "abstain", "query": sql, "explanation": "x"})],
+        [tool_use("abstain", {"reason": "no city detail"})],
+    )
+    agent = Agent(client, db)
+    answer = agent.ask("rent in Burnaby?")
+    assert answer.abstained and agent.logs[0].final == "abstain"
+    bounce = client.requests[2]["messages"][-1]["content"][0]
+    assert bounce["is_error"] and "abstain tool" in bounce["content"]
+
+
 def test_mortgage_tool_matches_calculator(db):
     from open_data_analyst.finance import mortgage_payment
 
