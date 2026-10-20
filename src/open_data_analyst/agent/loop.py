@@ -37,9 +37,13 @@ cannot answer.
 bedroom count, period or measure the tables do not contain, or asks for a forecast, an opinion \
 or advice, call abstain and say what is missing. A wrong confident number is worse than \
 declining. Do not substitute a nearby measure and present it as the one asked for.
-3. For a mortgage question, unless the user says otherwise: 20% down, 25 year amortization, and \
+3. A bare city name such as "Vancouver" or "Surrey" means that municipality, not the metro area \
+(CMA), unless the question says "metro", "CMA" or "region" for that figure. When one question \
+mixes a city figure with a metro figure, use each as labelled. State which geography each \
+number uses.
+4. For a mortgage question, unless the user says otherwise: 20% down, 25 year amortization, and \
 the latest posted 5-year rate in the data. State these assumptions in the explanation.
-4. Finish with exactly one call to submit_answer or abstain. submit_answer's `query` must be a \
+5. Finish with exactly one call to submit_answer or abstain. submit_answer's `query` must be a \
 query you ran with run_sql that returned the figures behind the answer; for a mortgage answer \
 that is the query for the price. Give the value in the unit the question asks for \
 (CAD per month, percent, a count) as a JSON number with no thousands separators, rounded to at \

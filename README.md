@@ -2,7 +2,7 @@
 
 Ask a question about Canadian housing in plain English. A Claude agent writes read-only SQL against a local DuckDB store, runs it, and returns the number, a chart and the exact query, or says it can't answer.
 
-**Status: Phase 3 (agent core).** The data layer works, a 41-question eval set with a scorer exists, and the agent scores 95% (39 of 41, 2 confident-wrong) on the live set against a 29% always-abstain floor, at about $0.002 per question. See [docs/plan.md](docs/plan.md) and [docs/data-dictionary.md](docs/data-dictionary.md).
+**Status: Phase 3 (agent core).** The data layer works, a 41-question eval set with a scorer exists, and the agent scored 100% on three consecutive live runs (0 confident-wrong) against a 29% always-abstain floor, at about $0.002 per question. The set was tuned against its own failures, so fresh questions are the next check. See [docs/plan.md](docs/plan.md) and [docs/data-dictionary.md](docs/data-dictionary.md).
 
 ## Why this exists
 Second portfolio project. Where [support-desk-assistant](https://github.com/vdrohan/support-desk-assistant) answers from documents, this one answers from structured data using tools, and is judged on exact numbers against an eval set.
