@@ -225,3 +225,6 @@ data/raw/*
 *.duckdb
 *.duckdb.wal
 .env
+
+# Eval run traces (per-question queries, tokens, cost)
+data/eval/runs/
