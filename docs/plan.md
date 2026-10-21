@@ -17,7 +17,7 @@ Show agents and tool use over structured data, a second language (TypeScript), a
 | 1 | Data layer | 3-5 housing tables in DuckDB, data dictionary, refresh script, source and licence notes | The owner's real questions are answerable by hand with SQL | Done |
 | 2 | Eval set first | 40-60 questions with exact expected numbers, including unanswerable ones | Runner scores a baseline | Done |
 | 3 | Agent core | Claude tool loop: schema lookup, read-only SQL with row/time limits, query shown, abstains when unsure | Beats baseline, guardrail tests pass | Done (tuned set 100%, holdout 91%) |
-| 4 | Charts + MCP | Chart output; tools wrapped as an MCP server | Works end to end from Claude Desktop | Next |
+| 4 | Charts + MCP | Chart output; tools wrapped as an MCP server | Works end to end from Claude Desktop | Built and tested over stdio; Claude Desktop check pending |
 | 5 | TypeScript UI + deploy | Small web UI behind Tailscale or Cloudflare Tunnel, logging, cost tracking | Used daily on real questions | Not started |
 | 6 | Write-up | Eval results, cost per question, limits | docs/impact.md complete | Not started |
 
