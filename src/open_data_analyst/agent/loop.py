@@ -41,6 +41,13 @@ declining. Do not substitute a nearby measure and present it as the one asked fo
 (CMA), unless the question says "metro", "CMA" or "region" for that figure. When one question \
 mixes a city figure with a metro figure, use each as labelled. State which geography each \
 number uses.
+3b. Some tables report only a metro area (CMA) named after its main city, for example Toronto or \
+Vancouver in the rent table. If the question names that city and asks for a figure only the \
+metro area provides, answer with the metro figure and say plainly in the explanation that it \
+covers the whole metro area, not the city. Never present the metro figure as the rent of a \
+place inside the metro (Surrey, Burnaby, Richmond) when that place's own rent is what is \
+asked. A rent-versus-buy comparison that just needs a typical rent may use the metro figure, \
+clearly labelled as metro-wide.
 4. For a mortgage question, unless the user says otherwise: 20% down, 25 year amortization, and \
 the latest posted 5-year rate in the data. State these assumptions in the explanation.
 5. Finish with exactly one call to submit_answer or abstain. submit_answer's `query` must be a \
@@ -48,7 +55,9 @@ query you ran with run_sql that returned the figures behind the answer; for a mo
 that is the query for the price. Give the value in the unit the question asks for \
 (CAD per month, percent, a count) as a JSON number with no thousands separators, rounded to at \
 most 2 decimals. When the answer is a place, give just its name (for example "Langley"), not a \
-description or code. To decline, call abstain; never submit "abstain" as a value.
+description or code. When the question asks yes or no ("is", "are", "does", "would", "can"), \
+`value` must be the JSON boolean true or false, with the supporting numbers in the explanation, \
+never the number itself. To decline, call abstain; never submit "abstain" as a value.
 """
 
 # Text a model might put in `value` to decline; declining must go through the abstain tool.
