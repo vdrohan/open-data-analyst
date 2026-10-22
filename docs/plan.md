@@ -2,24 +2,24 @@
 
 Draft 2026-10-16. Ask a question about Canadian housing in plain English; a Claude agent writes read-only SQL, runs it, and returns the number, a chart and the query, or abstains.
 
-## Fit with the career target
-Closes the gaps project 1 leaves for Forward Deployed Engineer roles: agents and tool use, structured data, a second language (TypeScript), a deployed and observable service. Reuses project 1's habits: eval set first, show-your-work answers, CI, decisions log, impact log.
+## Goals
+Show agents and tool use over structured data, a second language (TypeScript), and a deployed, observable service. Reuses the earlier support-desk project's habits: eval set first, show-your-work answers, CI, decisions log, impact log.
 
 ## Assumptions
 - Cloud-only AI; Haiku for the agent loop; spend capped.
-- DuckDB on the 2017 Air, not a server database.
+- DuckDB on a modest laptop, not a server database.
 - Client is the owner. Sources are public housing data (Statistics Canada, CMHC, possibly provincial). Exact tables are confirmed in Phase 1; none are assumed yet.
 
 ## Phases
-| # | Phase | Output | Done when |
-|---|---|---|---|
-| 0 | Scope + scaffold | This plan, repo, CI | PR merged |
-| 1 | Data layer | 3-5 housing tables in DuckDB, data dictionary, refresh script, source and licence notes | The owner's real questions are answerable by hand with SQL |
-| 2 | Eval set first | 40-60 questions with exact expected numbers, including unanswerable ones | Runner scores a baseline |
-| 3 | Agent core | Claude tool loop: schema lookup, read-only SQL with row/time limits, query shown, abstains when unsure | Beats baseline, guardrail tests pass |
-| 4 | Charts + MCP | Chart output; tools wrapped as an MCP server | Works end to end from Claude Desktop |
-| 5 | TypeScript UI + deploy | Small web UI behind Tailscale or Cloudflare Tunnel, logging, cost tracking | Used daily on real questions |
-| 6 | Write-up | Eval results, cost per question, limits | docs/impact.md complete |
+| # | Phase | Output | Done when | Status |
+|---|---|---|---|---|
+| 0 | Scope + scaffold | This plan, repo, CI | PR merged | Done |
+| 1 | Data layer | 3-5 housing tables in DuckDB, data dictionary, refresh script, source and licence notes | The owner's real questions are answerable by hand with SQL | Done |
+| 2 | Eval set first | 40-60 questions with exact expected numbers, including unanswerable ones | Runner scores a baseline | Done |
+| 3 | Agent core | Claude tool loop: schema lookup, read-only SQL with row/time limits, query shown, abstains when unsure | Beats baseline, guardrail tests pass | Done (tuned set 100%, holdout 91%) |
+| 4 | Charts + MCP | Chart output; tools wrapped as an MCP server | Works end to end from Claude Desktop | Next |
+| 5 | TypeScript UI + deploy | Small web UI behind Tailscale or Cloudflare Tunnel, logging, cost tracking | Used daily on real questions | Not started |
+| 6 | Write-up | Eval results, cost per question, limits | docs/impact.md complete | Not started |
 
 If time gets tight, cut the Phase 5 UI first and keep the evals.
 

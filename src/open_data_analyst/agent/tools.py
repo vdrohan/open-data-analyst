@@ -60,7 +60,10 @@ TOOLS: list[dict] = [
             "properties": {
                 "value": {
                     "anyOf": [{"type": "number"}, {"type": "string"}, {"type": "boolean"}],
-                    "description": "The answer: a number, a short text, or true/false.",
+                    "description": (
+                        "The answer: a number, a short text, or true/false. "
+                        "A yes/no question must get true or false, not a number."
+                    ),
                 },
                 "query": {"type": "string", "description": "The SQL behind the answer."},
                 "explanation": {
