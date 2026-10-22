@@ -56,6 +56,32 @@ flowchart LR
 - **A holdout set checks for tuning.** 22 further questions, written after the agent was tuned and scored once as written, so the score is not flattered by fixes made to the original set.
 - **The main set mixes** 12 lookups, 12 calculations, 5 scope checks and 12 questions the data cannot answer.
 
+## Use it from Claude Desktop (MCP)
+
+The same tools are available as an MCP server, so Claude Desktop can query the data and draw charts directly. Add this to `claude_desktop_config.json`, with the path to your checkout:
+
+```json
+{
+  "mcpServers": {
+    "open-data-analyst": {
+      "command": "uv",
+      "args": ["--directory", "/path/to/open-data-analyst", "run", "python", "-m", "open_data_analyst.mcp_server"],
+      "env": { "ANTHROPIC_API_KEY": "only needed for the ask tool" }
+    }
+  }
+}
+```
+
+| Tool | What it does | Cost |
+|---|---|---|
+| `describe_schema` | Tables, columns and each table's limits | free |
+| `run_sql` | One read-only SELECT, 50 rows, 10 seconds | free |
+| `mortgage_payment` | Canadian semi-annual compounding | free |
+| `make_chart` | Runs a SELECT and returns a Vega-Lite bar or line chart spec | free |
+| `ask` | Runs the evaluated Haiku agent: answer plus its query, or a reason for declining | about $0.002 per question, capped at $0.25 per session |
+
+With the free tools Claude Desktop does the reasoning itself, so the eval scores above describe `ask`, not Desktop's own answers. Every query goes through the same read-only store either way.
+
 ## Data
 
 | Source | Used for |
@@ -96,7 +122,7 @@ uv run python -m open_data_analyst.evals baseline    # score the always-abstain 
 ANTHROPIC_API_KEY=... uv run python -m open_data_analyst.evals agent --max-cost 1
 ```
 
-Development: `uv run ruff check . && uv run ruff format --check . && uv run pytest` (51 tests).
+Development: `uv run ruff check . && uv run ruff format --check . && uv run pytest` (60 tests).
 
 ## Project notes
 
